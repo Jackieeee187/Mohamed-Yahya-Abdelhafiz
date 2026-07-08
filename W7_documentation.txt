@@ -1,0 +1,57 @@
+Subject: Fundamental of Computational Thinking: Python
+Week 7 - Tutorial 7
+
+Scenario
+FoodExpress needs a simple Python program to calculate food order payments.
+The program must not crash and must not accept invalid orders.
+
+Files Created
+1. main.py
+2. food_order.py
+3. test_food_order.py
+4. W7_documentation.txt
+
+Bug Found in main.py
+The original program can crash if the user enters text instead of a number.
+It can also accept wrong values such as a negative price or zero quantity.
+The calculation line was also missing, so the program did not properly calculate the total.
+
+How I Fixed the Program
+1. I imported calculate_total from food_order.py.
+2. I completed the calculation using price * quantity.
+3. I added validation for price and quantity.
+4. I used try and except so the program will not crash when the user enters invalid input.
+5. I created pytest tests to check normal orders and invalid orders.
+
+Pseudocode
+Start
+Ask the user to enter price
+If price is not a number or price is less than or equal to 0
+    Show invalid price message
+    Ask again
+Ask the user to enter quantity
+If quantity is not a whole number or quantity is less than or equal to 0
+    Show invalid quantity message
+    Ask again
+Calculate total = price * quantity
+Display total payment
+End
+
+Test Cases
+1. food_order(10, 2) should return 20
+2. food_order(15, 2) should return 30
+3. food_order(25, 4) should return 100
+4. food_order(5, 2) should return 10
+5. food_order(-10, 2) should return invalid price
+6. food_order(10, 0) should return invalid quantity
+
+How to Run the Program
+cd week_7
+python main.py
+
+How to Run the Tests
+cd week_7
+python -m pytest
+
+Expected Pytest Result
+All tests should pass.

@@ -1,53 +1,48 @@
-"""Main program for the cafe bill calculator."""
+"""Main program for Week 7 food order calculator."""
 
-from utils import calculate_total, print_receipt
+from food_order import calculate_total
 
 
-def get_customer_name():
-    """Ask the user to enter a customer name."""
+def get_price():
+    """Ask the user to enter a valid food price."""
     while True:
-        name = input("Customer name: ").strip()
-
-        # The name must not be empty.
-        if name:
-            return name
-
-        print("Customer name cannot be empty. Please try again.")
-
-
-def get_quantity(item_name):
-    """Ask the user to enter a valid item quantity."""
-    while True:
-        user_input = input(f"{item_name} quantity: ").strip()
-
         try:
-            # Convert the user's input into a whole number.
-            quantity = int(user_input)
+            price = float(input("Price (RM): "))
 
-            # Quantity cannot be less than zero.
-            if quantity < 0:
-                print("Quantity cannot be negative. Please enter 0 or more.")
+            # Price must be more than zero because food cannot have a negative price.
+            if calculate_total(price, 1) == "invalid price":
+                print("Invalid price. Please enter a price more than 0.")
+            else:
+                return price
+
+        except ValueError:
+            print("Invalid price. Please enter numbers only.")
+
+
+def get_quantity():
+    """Ask the user to enter a valid food quantity."""
+    while True:
+        try:
+            quantity = int(input("Quantity: "))
+
+            # Quantity must be a whole number more than zero.
+            if calculate_total(1, quantity) == "invalid quantity":
+                print("Invalid quantity. Please enter a quantity more than 0.")
             else:
                 return quantity
 
         except ValueError:
-            print("Invalid input. Please enter a whole number.")
+            print("Invalid quantity. Please enter a whole number only.")
 
 
 def main():
-    """Run the cafe bill calculator."""
-    print("Cafe Bill Calculator")
-    print("--------------------")
+    """Run the food order calculator."""
+    price = get_price()
+    quantity = get_quantity()
 
-    # Get the customer details and order quantities.
-    customer_name = get_customer_name()
-    coffee = get_quantity("Coffee")
-    tea = get_quantity("Tea")
-    sandwich = get_quantity("Sandwich")
+    total = calculate_total(price, quantity)
 
-    # Calculate the bill and print the receipt.
-    total = calculate_total(coffee, tea, sandwich)
-    print_receipt(customer_name, coffee, tea, sandwich, total)
+    print(f"Total Payment = RM {total:.2f}")
 
 
 if __name__ == "__main__":
